@@ -25,7 +25,7 @@ class MemberRepository implements Member
     public function findById(int $id): User|null
     {
         return $this->cacheRepository->remember("members.{$id}", 60 * 5, function () use ($id) {
-            return $this->query()->find($id);
+            return $this->user->find($id);
         });
     }
 
