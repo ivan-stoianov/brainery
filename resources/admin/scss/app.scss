@@ -12,3 +12,55 @@ $fa-font-path: "~fontawesome/webfonts";
 @import "@fortawesome/fontawesome-free/scss/regular.scss";
 @import "@fortawesome/fontawesome-free/scss/solid.scss";
 @import "@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+// Components
+// ====================================
+@import "app-header";
+@import "app-sidebar";
+
+.app-main-content {
+    margin-top: $app-header-height;
+    transition: margin-left $app-sidebar-transition-speed;
+}
+
+@include media-breakpoint-down(xl) {
+    body.show-app-sidebar {
+        .app-sidebar {
+            left: 0;
+            right: auto;
+        }
+
+        .app-sidebar-back {
+            display: block;
+        }
+    }
+}
+
+@include media-breakpoint-up(xl) {
+    .app-sidebar {
+        left: 0;
+    }
+
+    .app-header {
+        margin-left: $app-sidebar-width;
+    }
+
+    .app-main-content {
+        margin-top: $app-header-height;
+        margin-left: $app-sidebar-width;
+    }
+
+    body.hide-app-sidebar {
+        .app-sidebar {
+            left: -$app-sidebar-width;
+        }
+
+        .app-header {
+            margin-left: 0;
+        }
+
+        .app-main-content {
+            margin-left: 0;
+        }
+    }
+}

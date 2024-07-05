@@ -1,0 +1,56 @@
+@import "variables";
+
+// Bootstrap 5
+// ====================================
+@import "bootstrap/scss/bootstrap";
+
+// Font awesome
+// ====================================
+$fa-font-path: "~fontawesome/webfonts";
+@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "@fortawesome/fontawesome-free/scss/brands.scss";
+@import "@fortawesome/fontawesome-free/scss/regular.scss";
+@import "@fortawesome/fontawesome-free/scss/solid.scss";
+@import "@fortawesome/fontawesome-free/scss/v4-shims.scss";
+
+
+.auth-layout {
+    min-height: 100vh;
+    display: grid;
+}
+
+.auth-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.auth-sidebar {
+    display: none;
+    background-color: $gray-200;
+    padding: 1.5rem;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 380px;
+}
+
+@include media-breakpoint-up(xl) {
+    .auth-layout {
+        display: grid;
+        grid-template-columns: 45% 1fr;
+    }
+
+    .auth-sidebar {
+        display: block;
+    }
+}
+
+@include media-breakpoint-up(xxl) {
+    .auth-layout {
+        grid-template-columns: 40% 1fr;
+    }
+}
