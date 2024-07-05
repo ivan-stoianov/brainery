@@ -11,9 +11,9 @@ class FlashMessageService implements FlashMessage
     public function __construct()
     {
         \Spatie\Flash\Flash::levels([
-            'success' => 'alert-success',
-            'warning' => 'alert-warning',
-            'error' => 'alert-error',
+            'success' => 'alert alert-success',
+            'warning' => 'alert alert-warning',
+            'error' => 'alert alert-error',
         ]);
     }
 
@@ -32,14 +32,27 @@ class FlashMessageService implements FlashMessage
         flash()->error($message);
     }
 
-    public function display(): ?Stringable
+    public function display($dismissible = true): ?Stringable
     {
         if (!flash()->message) {
             return null;
         }
 
+        $dismissButton = '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+
+        if ($dismissible) {
+            return new HtmlString(
+                sprintf(
+                    '<div class="%s alert-dismissible fade show" role="alert">%s %s</div>',
+                    flash()->class,
+                    flash()->message,
+                    $dismissButton
+                )
+            );
+        }
+
         return new HtmlString(
-            sprintf('<div class="%s">%s</div>', flash()->class, flash()->message)
+            sprintf('<div class="%s" role="alert">%s</div>', flash()->class, flash()->message)
         );
     }
 }

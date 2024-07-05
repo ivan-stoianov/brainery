@@ -1,0 +1,24 @@
+// Colors
+// =======================================
+$primary: #0d6efd;
+$white: white;
+$black: black;
+
+$min-contrast-ratio: 2.0;
+
+$font-family-base: "Inter", sans-serif;
+$font-size-base: 0.92rem;
+
+$input-group-addon-bg: transparent;
+
+// App sidebar
+// =======================================
+$app-sidebar-width: 240px;
+$app-sidebar-bg: darken($primary, 20%);
+$app-sidebar-transition-speed: 500ms;
+$app-sidebar-border-color: lighten($app-sidebar-bg, 5%);
+
+// App header
+// =======================================
+$app-header-height: 60px;
+$app-header-transition-speed: 500ms;
