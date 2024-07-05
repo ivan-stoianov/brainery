@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Casts\Email;
 use App\Enums\UserType;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +23,8 @@ class User extends Authenticatable
     protected $fillable = [
         'type',
         'active',
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
     ];
@@ -46,6 +49,7 @@ class User extends Authenticatable
         return [
             'active' => 'boolean',
             'type' => UserType::class,
+            'email' => Email::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
@@ -56,13 +60,38 @@ class User extends Authenticatable
         return $this->active;
     }
 
+    public function getType(): UserType
+    {
+        return $this->type;
+    }
+
+    public function getFirstName(): string
+    {
+        return $this->first_name;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->last_name;
+    }
+
     public function getName(): string
     {
-        return $this->name;
+        return sprintf('%s %s', $this->getFirstName(), $this->getLastName());
     }
 
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function scopeOnlyMember(Builder $query): Builder
+    {
+        return $query->where('type', '=', UserType::MEMBER);
+    }
+
+    public function scopeOnlyAdmin(Builder $query): Builder
+    {
+        return $query->where('type', '=', UserType::ADMIN);
     }
 }

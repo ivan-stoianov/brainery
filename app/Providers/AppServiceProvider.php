@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\HtmlExtendedService;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
@@ -34,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+
+        Request::macro('isAdmin', function () {
+            return $this->segment(1) === trim(config('app.admin_prefix'), '/');
+        });
 
         $this->registerCarbonMacros();
     }

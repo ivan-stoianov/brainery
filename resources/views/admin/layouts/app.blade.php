@@ -2,10 +2,12 @@
 
 @push('head')
     <meta name="admin-base-uri" content="{{ route('admin.home') }}">
+    @livewireStyles
     @vite('resources/admin/scss/app.scss')
 @endpush
 
 @push('footer')
+    @livewireScripts
     @vite('resources/admin/js/app.js')
 @endpush
 
@@ -36,12 +38,12 @@
             </li>
             <li>
                 <a href="{{ route('admin.members.index') }}"
-                    class="{{ request()->routeIs('admin.members.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
+                    class="{{ request()->routeIs('admin.members.*', 'admin.member.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
                     <span>
-                        <i class="fa-solid fa-users app-sidebar-icon me-1"></i>
+                        <i class="fa-solid fa-user-graduate app-sidebar-icon me-1"></i>
                         {{ __('Members') }}
                     </span>
-                    @if (request()->routeIs('admin.members.*'))
+                    @if (request()->routeIs('admin.members.*', 'admin.member.*'))
                         <i class="fa-solid fa-caret-right opacity-25"></i>
                     @endif
                 </a>
