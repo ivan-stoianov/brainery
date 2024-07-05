@@ -12,6 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(\App\Services\Contracts\SeoMeta::class, \App\Services\SeoMetaService::class);
+        $this->app->bind('seo.meta.tools', \App\Services\SeoMetaService::class);
+
         $this->registerLocalProviders();
     }
 
