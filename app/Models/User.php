@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasDefaultGetters;
 
     /**
      * The attributes that are mass assignable.
@@ -51,8 +51,18 @@ class User extends Authenticatable
         ];
     }
 
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
     }
 }

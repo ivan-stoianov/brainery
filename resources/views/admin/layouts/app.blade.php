@@ -34,6 +34,18 @@
                     @endif
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.members.index') }}"
+                    class="{{ request()->routeIs('admin.members.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
+                    <span>
+                        <i class="fa-solid fa-users app-sidebar-icon me-1"></i>
+                        {{ __('Members') }}
+                    </span>
+                    @if (request()->routeIs('admin.members.*'))
+                        <i class="fa-solid fa-caret-right opacity-25"></i>
+                    @endif
+                </a>
+            </li>
         </ul>
     </x-admin.app-sidebar>
     {{-- END: App Sidebar --}}

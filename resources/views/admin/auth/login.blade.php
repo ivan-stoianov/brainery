@@ -21,7 +21,7 @@
                     <div class="input-group-text">
                         <i class="fa-regular fa-envelope"></i>
                     </div>
-                    {{ html()->email('email')->autocomplete('username')->autofocus() }}
+                    {{ html()->email('email')->autocomplete('username') }}
                 </div>
                 {{ html()->error('email') }}
             </div>
