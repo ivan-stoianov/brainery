@@ -1,0 +1,116 @@
+@import "variables";
+
+.app-sidebar {
+    position: fixed;
+    width: $app-sidebar-width;
+    background-color: $app-sidebar-bg;
+    inset: 0 auto 0 0;
+    z-index: 20;
+    left: -$app-sidebar-width;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    transition: left $app-sidebar-transition-speed;
+}
+
+.app-sidebar-header {
+    height: $app-header-height;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $app-sidebar-border-color;
+    padding: 0 $container-padding-x;
+
+    img {
+        max-width: 80%;
+        max-height: calc(#{$app-header-height} - 1rem);
+    }
+}
+
+.app-sidebar-body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.app-sidebar-logo {
+    text-decoration: none;
+    color: $white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.app-sidebar-back {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba($app-sidebar-bg, 0.3);
+    z-index: 10;
+}
+
+.app-sidebar-menu {
+    margin: 0;
+    padding: 0;
+
+    a {
+        color: $white;
+        text-decoration: none;
+    }
+
+    a.active {
+        background-color: darken($app-sidebar-bg, 1.5%);
+    }
+}
+
+.app-sidebar-menu>li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-sidebar-menu>li>a {
+    display: block;
+    padding: 1rem $container-padding-x;
+}
+
+.app-sidebar-menu>li>a {
+    border-bottom: 1px solid $app-sidebar-border-color;
+}
+
+.app-sidebar-icon {
+    width: 1.25rem;
+}
+
+.app-sidebar-menu>li:has(ul) {
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: none;
+    }
+
+    &.active ul {
+        display: block;
+    }
+
+    .app-sidebar-icon-up {
+        display: none;
+    }
+
+    .app-sidebar-icon-down {
+        display: block;
+    }
+
+    &.active a {
+        .app-sidebar-icon-up {
+            display: block;
+        }
+
+        .app-sidebar-icon-down {
+            display: none;
+        }
+    }
+
+    ul>li>a {
+        display: block;
+        padding: 1rem $container-padding-x 1rem $container-padding-x + 1rem;
+    }
+}

@@ -1,0 +1,15 @@
+@import "variables";
+
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    height: $app-header-height;
+    background-color: $white;
+    border-bottom: 1px solid $gray-300;
+    display: flex;
+    align-items: center;
+    transition: margin-left $app-header-transition-speed;
+}
