@@ -25,10 +25,16 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerLocalProviders(): void
     {
-        if (!App::environment('local')) {
+        if (!App::isLocal()) {
             return;
         }
 
-        $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        if (class_exists(\Barryvdh\Debugbar\ServiceProvider::class)) {
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
+
+        if (class_exists(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class)) {
+            $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+        }
     }
 }
