@@ -17,7 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
         }
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'admin.auth' => \App\Http\Middleware\Admin\Authenticate::class,
+            'admin.guest' => \App\Http\Middleware\Admin\RedirectIfAuthenticated::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

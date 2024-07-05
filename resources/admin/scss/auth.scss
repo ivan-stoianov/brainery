@@ -30,7 +30,8 @@ $fa-font-path: "~fontawesome/webfonts";
 .auth-sidebar {
     display: none;
     background-color: $gray-200;
-    padding: 1.5rem;
+    background-size: cover;
+    background-position: center;
 }
 
 .auth-card {
