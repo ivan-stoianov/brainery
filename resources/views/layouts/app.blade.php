@@ -8,5 +8,6 @@
     @vite('resources/js/app.js')
 @endpush
 
-@section('app_content')
+@section('base_content')
+    @yield('app_content')
 @endsection

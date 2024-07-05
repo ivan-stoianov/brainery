@@ -15,6 +15,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(\App\Services\Contracts\SeoMeta::class, \App\Services\SeoMetaService::class);
         $this->app->bind('seo.meta.tools', \App\Services\SeoMetaService::class);
 
+        $this->app->bind(\App\Services\Contracts\FlashMessage::class, \App\Services\FlashMessageService::class);
+        $this->app->bind('flash.message', \App\Services\FlashMessageService::class);
+
         $this->registerLocalProviders();
     }
 
