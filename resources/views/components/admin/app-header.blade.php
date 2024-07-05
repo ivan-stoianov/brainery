@@ -14,7 +14,7 @@
                     {{ $right }}
                 @endif
 
-                {{ html()->form()->class('d-inline')->open() }}
+                {{ html()->form()->route('admin.auth.logout')->class('d-inline')->open() }}
 
                 <button type="submit" class="btn">
                     <i class="fa-solid fa-power-off me-md-2"></i>
