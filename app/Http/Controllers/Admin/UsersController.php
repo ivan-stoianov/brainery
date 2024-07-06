@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Data\CreateUserAdminData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\CreateUserRequest;
-use App\Repositories\Contracts\UserAdminInterface;
-use App\Repositories\Data\CreateUserAdminData;
 use App\Services\Contracts\FlashMessageInterface;
 use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\UserAdminServiceInterface;
 use Error;
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +22,7 @@ class UsersController extends Controller
         protected readonly SeoMetaInterface $seoMeta,
         protected readonly FlashMessageInterface $flashMessage,
         protected readonly LoggerInterface $logger,
-        protected readonly UserAdminInterface $userAdminRepository
+        protected readonly UserAdminServiceInterface $userAdminService
     ) {
     }
 
@@ -50,7 +50,7 @@ class UsersController extends Controller
                 password: $request->get('password'),
             );
 
-            $user = $this->userAdminRepository->register($data);
+            $user = $this->userAdminService->register($data);
 
             $this->flashMessage->success(
                 __('New user has been registered.')

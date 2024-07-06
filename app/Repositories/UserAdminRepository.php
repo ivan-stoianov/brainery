@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+use App\Data\CreateUserAdminData;
 use App\Enums\UserType;
 use App\Models\User;
-use App\Repositories\Contracts\UserAdminInterface;
-use App\Repositories\Data\CreateUserAdminData;
+use App\Repositories\Contracts\UserAdminRepositoryInterface;
 use Illuminate\Contracts\Cache\Repository as CacheInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserAdminRepository implements UserAdminInterface
+class UserAdminRepository implements UserAdminRepositoryInterface
 {
     public function __construct(
         protected readonly User $user,
-        protected readonly CacheInterface $cacheRepository
+        protected readonly CacheInterface $cacheRepository,
     ) {
     }
 
@@ -29,14 +29,14 @@ class UserAdminRepository implements UserAdminInterface
 
     public function findById(int $id): ?User
     {
-        return $this->cacheRepository->remember("admin.{$id}", 60 * 5, function () use ($id) {
+        return $this->cacheRepository->remember("users.admin.{$id}", 60 * 5, function () use ($id) {
             return $this->query()->find($id);
         });
     }
 
     public function findByEmail(string $email): ?User
     {
-        return $this->cacheRepository->remember("admin.{$email}", 60 * 5, function () use ($email) {
+        return $this->cacheRepository->remember("users.admin.{$email}", 60 * 5, function () use ($email) {
             return $this->query()->where('email', '=', $email)->first();
         });
     }
@@ -60,8 +60,8 @@ class UserAdminRepository implements UserAdminInterface
     protected function clearMemberCache(User $member): bool
     {
         return $this->cacheRepository->deleteMultiple([
-            "admin.{$member->getId()}",
-            "admin.{$member->getEmail()}",
+            "users.admin.{$member->getId()}",
+            "users.admin.{$member->getEmail()}",
         ]);
     }
 }

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Repositories\Contracts\UserMemberInterface;
+use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use Illuminate\Contracts\Cache\Repository as CacheInterface;
 use Illuminate\Database\Eloquent\Builder;
 
-class UserMemberRepository implements UserMemberInterface
+class UserMemberRepository implements UserMemberRepositoryInterface
 {
     public function __construct(
         protected readonly User $user,

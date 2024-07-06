@@ -7,7 +7,7 @@ namespace App\Repositories\Contracts;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-interface UserMemberInterface
+interface UserMemberRepositoryInterface
 {
     public function query(): Builder;
 

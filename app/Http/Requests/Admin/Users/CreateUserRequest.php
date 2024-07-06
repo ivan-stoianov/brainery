@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Admin\Users;
 
+use App\Rules\FirstName;
+use App\Rules\LastName;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class CreateUserRequest extends FormRequest
 {
@@ -22,7 +25,32 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'first_name' => ['required'],
+            'first_name' => [
+                'required',
+                'min:2',
+                'max:40',
+                new FirstName(),
+            ],
+            'last_name' => [
+                'required',
+                'min:2',
+                'max:40',
+                new LastName(),
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:100'
+            ],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(12)
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->mixedCase()
+            ],
         ];
     }
 }

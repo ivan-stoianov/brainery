@@ -6,14 +6,14 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Exceptions\Admin\UserAdminNotFoundException;
 use App\Http\Controllers\Controller;
-use App\Repositories\Contracts\UserAdminInterface;
+use App\Repositories\Contracts\UserAdminRepositoryInterface;
 use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     public function __construct(
-        protected readonly UserAdminInterface $userAdminRepository,
+        protected readonly UserAdminRepositoryInterface $userAdminRepository,
         protected readonly SeoMetaInterface $seoMeta
     ) {
     }

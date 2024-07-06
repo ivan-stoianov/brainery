@@ -45,16 +45,118 @@ class UserRegistrationTest extends TestCase
             ->assertInvalid('first_name');
     }
 
+    public function test_it_first_name_min_2_characters(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'first_name' => 'J'
+        ])->assertInvalid('first_name');
+    }
+
+    public function test_it_first_name_max_40_characters(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'first_name' => str_pad('John', 41, 'n', STR_PAD_RIGHT),
+        ])->assertInvalid('first_name');
+    }
+
+    public function test_it_first_name_must_be_valid(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'first_name' => 'John123',
+        ])->assertInvalid('first_name');
+    }
+
+    public function test_it_require_last_name_field(): void
+    {
+        $this->post(route('admin.users.store'))
+            ->assertInvalid('last_name');
+    }
+
+    public function test_it_last_name_min_2_characters(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'last_name' => 'J'
+        ])->assertInvalid('last_name');
+    }
+
+    public function test_it_last_name_max_40_characters(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'last_name' => str_pad('John', 41, 'n', STR_PAD_RIGHT),
+        ])->assertInvalid('last_name');
+    }
+
+    public function test_it_last_name_must_be_valid(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'last_name' => 'John123',
+        ])->assertInvalid('last_name');
+    }
+
+    public function test_it_require_email_field(): void
+    {
+        $this->post(route('admin.users.store'))
+            ->assertInvalid('email');
+    }
+
+    public function test_it_require_email_to_be_valid(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'email' => 'not-valid-email',
+        ])->assertInvalid('email');
+    }
+
+    public function test_it_email_max_100_characters(): void
+    {
+        $username = str_pad('admin', 50, 'n', STR_PAD_RIGHT);
+        $this->assertEquals(50, strlen($username));
+
+        $domain = str_pad('domain.com', 50, 'd', STR_PAD_LEFT);
+        $this->assertEquals(50, strlen($domain));
+
+        $email = sprintf('%s@%s', $username, $domain);
+        $this->assertEquals(101, strlen($email));
+
+        $this->assertTrue((bool) filter_var($email, FILTER_VALIDATE_EMAIL));
+
+        $this->post(route('admin.users.store'), [
+            'email' => $email,
+        ])->assertInvalid('email');
+    }
+
+    public function test_it_require_password_field(): void
+    {
+        $this->post(route('admin.users.store'))
+            ->assertInvalid('password');
+    }
+
+    public function test_password_min_12_characters(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'password' => 'Pass100#',
+            'password_confirmation' => 'Pass100#',
+        ])->assertInvalid('password');
+    }
+
+    public function test_it_require_password_confirmation_field(): void
+    {
+        $this->post(route('admin.users.store'), [
+            'password' => 'Password123#',
+        ])->assertInvalid('password');
+    }
+
     public function test_register_new_user(): void
     {
         $formData = [
             'first_name' => $this->faker()->firstName(),
             'last_name' => $this->faker()->lastName(),
             'email' => $this->faker()->unique()->safeEmail(),
-            'password' => $this->faker()->password(12),
+            'password' => 'Password123#',
+            'password_confirmation' => 'Password123#'
         ];
 
-        $this->post(route('admin.users.store'), $formData);
+        $this->post(route('admin.users.store'), $formData)
+            ->assertValid(['first_name', 'last_name', 'email', 'password']);
 
         $this->assertDatabaseHas('users', [
             'type' => UserType::ADMIN->value,

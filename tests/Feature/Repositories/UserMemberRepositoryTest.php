@@ -4,23 +4,23 @@ namespace Tests\Feature\Repositories;
 
 use App\Enums\UserType;
 use App\Models\User;
-use App\Repositories\Contracts\UserMemberInterface;
+use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class MemberRepositoryTest extends TestCase
+class UserMemberRepositoryTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    protected UserMemberInterface $userMemberRepository;
+    protected UserMemberRepositoryInterface $userMemberRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->userMemberRepository = app()->make(UserMemberInterface::class);
+        $this->userMemberRepository = app()->make(UserMemberRepositoryInterface::class);
     }
 
     public function test_query(): void

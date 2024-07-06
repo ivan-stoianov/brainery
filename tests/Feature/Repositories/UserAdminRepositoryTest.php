@@ -4,7 +4,7 @@ namespace Tests\Feature\Repositories;
 
 use App\Enums\UserType;
 use App\Models\User;
-use App\Repositories\Contracts\UserAdminInterface;
+use App\Repositories\Contracts\UserAdminRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,13 +14,13 @@ class UserAdminRepositoryTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    protected UserAdminInterface $userAdminRepository;
+    protected UserAdminRepositoryInterface $userAdminRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->userAdminRepository = app()->make(UserAdminInterface::class);
+        $this->userAdminRepository = app()->make(UserAdminRepositoryInterface::class);
     }
 
     public function test_query(): void

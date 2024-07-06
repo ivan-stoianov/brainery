@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories\Data;
+namespace App\Data;
 
 final class UpdateSettingData
 {

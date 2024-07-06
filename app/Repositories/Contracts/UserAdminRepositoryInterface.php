@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Repositories\Contracts;
 
-use App\Repositories\Data\CreateUserAdminData;
+use App\Data\CreateUserAdminData;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-interface UserAdminInterface
+interface UserAdminRepositoryInterface
 {
     public function query(): Builder;
 

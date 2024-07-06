@@ -15,6 +15,7 @@ $fa-font-path: "~fontawesome/webfonts";
 
 // Components
 // ====================================
+@import "common";
 @import "app-header";
 @import "app-sidebar";
 @import "two-columns";
@@ -66,3 +67,4 @@ $fa-font-path: "~fontawesome/webfonts";
         }
     }
 }
+

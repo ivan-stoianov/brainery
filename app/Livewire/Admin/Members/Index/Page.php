@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Admin\Members\Index;
 
-use App\Repositories\Contracts\UserMemberInterface;
+use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
@@ -37,7 +37,7 @@ class Page extends Component
         300 => 300,
     ];
 
-    public function boot(UserMemberInterface $userMemberRepository): void
+    public function boot(UserMemberRepositoryInterface $userMemberRepository): void
     {
         $this->userMemberRepository = $userMemberRepository;
     }

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\Settings;
 
+use App\Data\UpdateSettingData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Settings\UpdateSettingRequest;
-use App\Repositories\Contracts\SettingInterface;
-use App\Repositories\Data\UpdateSettingData;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Services\Contracts\FlashMessageInterface;
 use App\Services\Contracts\SeoMetaInterface;
 use App\Settings\AppSetting;
@@ -23,7 +23,7 @@ class SettingsController extends Controller
         protected readonly SeoMetaInterface $seoMeta,
         protected readonly FlashMessageInterface $flashMessage,
         protected readonly AppSetting $appSetting,
-        protected readonly SettingInterface $settingRepository,
+        protected readonly SettingRepositoryInterface $settingRepository,
         protected readonly Logger $logger
     ) {
     }
