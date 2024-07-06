@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repositories\Contracts;
 
-use App\Repositories\Data\UpdateSettingData;
+use App\Data\UpdateSettingData;
 
-interface SettingInterface
+interface SettingRepositoryInterface
 {
     public function update(UpdateSettingData $data): bool;
 }

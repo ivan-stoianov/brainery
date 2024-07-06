@@ -25,7 +25,7 @@ Route::middleware('admin.auth')->group(function () {
         Route::get('/', [MemberProfileController::class, 'show'])->name('member.show');
     });
 
-    Route::get('users', [UsersController::class, 'index'])->name('users.index');
+    Route::resource('users', UsersController::class)->only(['index', 'create', 'store']);
     Route::prefix('user/{user}')->group(function () {
         Route::get('/', [UserProfileController::class, 'show'])->name('user.show');
     });

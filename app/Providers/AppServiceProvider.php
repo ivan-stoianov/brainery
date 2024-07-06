@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Repositories\AdminRepository;
-use App\Repositories\Contracts\AdminInterface;
-use App\Repositories\Contracts\MemberInterface;
-use App\Repositories\Contracts\SettingInterface;
-use App\Repositories\MemberRepository;
+use App\Repositories\Contracts\SettingRepositoryInterface;
+use App\Repositories\Contracts\UserAdminRepositoryInterface;
+use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use App\Repositories\SettingRepository;
+use App\Repositories\UserAdminRepository;
+use App\Repositories\UserMemberRepository;
 use App\Services\Contracts\FlashMessageInterface;
 use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\UserAdminServiceInterface;
 use App\Services\FlashMessageService;
 use App\Services\HtmlExtendedService;
 use App\Services\SeoMetaService;
+use App\Services\UserAdminService;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Carbon;
@@ -34,9 +36,11 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(Html::class, HtmlExtendedService::class);
 
-        $this->app->bind(AdminInterface::class, AdminRepository::class);
-        $this->app->bind(MemberInterface::class, MemberRepository::class);
-        $this->app->bind(SettingInterface::class, SettingRepository::class);
+        $this->app->bind(UserAdminRepositoryInterface::class, UserAdminRepository::class);
+        $this->app->bind(UserMemberRepositoryInterface::class, UserMemberRepository::class);
+        $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
+
+        $this->app->bind(UserAdminServiceInterface::class, UserAdminService::class);
 
         $this->registerLocalProviders();
     }
