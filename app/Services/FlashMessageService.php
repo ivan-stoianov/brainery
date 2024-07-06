@@ -2,18 +2,18 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\FlashMessage;
+use App\Services\Contracts\FlashMessageInterface;
 use Illuminate\Support\HtmlString;
 use Stringable;
 
-class FlashMessageService implements FlashMessage
+class FlashMessageService implements FlashMessageInterface
 {
     public function __construct()
     {
         \Spatie\Flash\Flash::levels([
             'success' => 'alert alert-success',
             'warning' => 'alert alert-warning',
-            'error' => 'alert alert-error',
+            'error' => 'alert alert-danger',
         ]);
     }
 
@@ -30,6 +30,14 @@ class FlashMessageService implements FlashMessage
     public function error(string $message): void
     {
         flash()->error($message);
+    }
+
+    public function internalServerError(?string $message = null): void
+    {
+        flash()->error(
+            $message ??=
+                __("Oops! Something went wrong. We're experiencing a temporary hiccup on our end. Please try again in a few moments.")
+        );
     }
 
     public function display($dismissible = true): ?Stringable

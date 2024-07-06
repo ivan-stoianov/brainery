@@ -1,8 +1,12 @@
 <?php
 
+use App\Exceptions\MemberNotFoundException;
+use App\Facades\SeoMeta;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -12,6 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             Route::middleware('web')
+                ->prefix(config('app.admin_prefix'))
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));
         }
@@ -23,5 +28,11 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->render(function (MemberNotFoundException $e, Request $request) {
+            SeoMeta::setTitle(__('Member not found.'));
+
+            if ($request->isAdmin()) {
+                return response()->view('admin.errors.member-not-found', [], Response::HTTP_NOT_FOUND);
+            }
+        });
     })->create();

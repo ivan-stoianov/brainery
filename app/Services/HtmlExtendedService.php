@@ -37,6 +37,14 @@ class HtmlExtendedService extends Html
             ->attribute('spellcheck', 'false');
     }
 
+    public function search($name = null, $value = null): Input
+    {
+        return parent::search($name, $value)
+            ->class('form-control')
+            ->classIf($this->hasError($name), 'is-invalid')
+            ->attribute('spellcheck', 'false');
+    }
+
     public function file($name = null): File
     {
         return parent::file($name)

@@ -1,0 +1,15 @@
+@import "variables";
+
+.page-header {
+    border-bottom: 1px solid $gray-400;
+    padding-block: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.page-header .page-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}

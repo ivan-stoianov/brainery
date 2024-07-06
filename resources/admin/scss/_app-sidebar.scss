@@ -85,6 +85,7 @@
         padding: 0;
         list-style: none;
         display: none;
+        font-size: 0.88rem;
     }
 
     &.active ul {
@@ -111,6 +112,6 @@
 
     ul>li>a {
         display: block;
-        padding: 1rem $container-padding-x 1rem $container-padding-x + 1rem;
+        padding: 0.8rem $container-padding-x 0.8rem $container-padding-x + 1rem;
     }
 }

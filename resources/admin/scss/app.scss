@@ -17,6 +17,8 @@ $fa-font-path: "~fontawesome/webfonts";
 // ====================================
 @import "app-header";
 @import "app-sidebar";
+@import "two-columns";
+@import "page-header";
 
 .app-main-content {
     margin-top: $app-header-height;

@@ -1,0 +1,22 @@
+@import "variables";
+
+$two-columns-sidebar-width: 300px;
+
+.two-columns-layout {
+    display: grid;
+    gap: 1rem;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.two-columns-layout-content {
+    width: 100%;
+}
+
+@include media-breakpoint-up(xl) {
+    .two-columns-layout {
+        grid-template-columns: $two-columns-sidebar-width 1fr;
+    }
+
+}

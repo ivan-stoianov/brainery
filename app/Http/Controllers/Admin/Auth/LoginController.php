@@ -4,18 +4,19 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\FlashMessage;
-use App\Services\Contracts\SeoMeta;
+use App\Services\Contracts\FlashMessageInterface;
+use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\View\View;
 
 class LoginController extends Controller
 {
     public function __construct(
-        protected readonly SeoMeta $seoMeta,
-        protected readonly FlashMessage $flashMessage
+        protected readonly SeoMetaInterface $seoMeta,
+        protected readonly FlashMessageInterface $flashMessage
     ) {
     }
 
@@ -33,6 +34,17 @@ class LoginController extends Controller
             'password' => ['required'],
         ]);
 
+        $rateLimiterKey = sprintf('admin.login:%s', $request->get('email'));
+        $rateLimiterPerMinute = 5;
+
+        if (RateLimiter::tooManyAttempts($rateLimiterKey, $rateLimiterPerMinute)) {
+            $seconds = RateLimiter::availableIn($rateLimiterKey);
+
+            return redirect()->back()->withInput()->withErrors([
+                'email' => trans('auth.throttle', ['seconds' => $seconds]),
+            ]);
+        }
+
         $email = $request->string('email');
         $password = $request->string('password');
 
@@ -44,18 +56,19 @@ class LoginController extends Controller
         ];
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
+            RateLimiter::clear($rateLimiterKey);
+
             $request->session()->regenerate();
 
             $this->flashMessage->success(__('Success'));
 
             return redirect()->intended(route('admin.home'));
         } else {
-            return redirect()
-                ->route('admin.auth.login')
-                ->withInput()
-                ->withErrors([
-                    'email' => trans('auth.failed'),
-                ]);
+            RateLimiter::increment($rateLimiterKey);
+
+            return redirect()->back()->withInput()->withErrors([
+                'email' => trans('auth.failed'),
+            ]);
         }
 
         return redirect()->back();
