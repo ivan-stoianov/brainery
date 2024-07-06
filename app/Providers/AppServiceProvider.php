@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(Html::class, HtmlExtendedService::class);
 
         $this->app->bind(\App\Repositories\Contracts\Member::class, \App\Repositories\MemberRepository::class);
+        $this->app->bind(\App\Repositories\Contracts\SettingInterface::class, \App\Repositories\SettingRepository::class);
 
         $this->registerLocalProviders();
     }

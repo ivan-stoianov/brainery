@@ -12,5 +12,7 @@ interface FlashMessage
 
     public function error(string $message): void;
 
+    public function internalServerError(?string $message = null): void;
+
     public function display(): ?Stringable;
 }
