@@ -4,28 +4,28 @@ namespace Tests\Feature\Repositories;
 
 use App\Enums\UserType;
 use App\Models\User;
-use App\Repositories\Contracts\AdminInterface;
+use App\Repositories\Contracts\UserAdminInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class AdminRepositoryTest extends TestCase
+class UserAdminRepositoryTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    protected AdminInterface $adminRepository;
+    protected UserAdminInterface $userAdminRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->adminRepository = app()->make(AdminInterface::class);
+        $this->userAdminRepository = app()->make(UserAdminInterface::class);
     }
 
     public function test_query(): void
     {
-        $result = $this->adminRepository->query();
+        $result = $this->userAdminRepository->query();
 
         $this->assertTrue(
             in_array(UserType::ADMIN->value, $result->getQuery()->bindings['where'])
@@ -38,7 +38,7 @@ class AdminRepositoryTest extends TestCase
     {
         $user = User::factory()->admin()->create();
 
-        $result = $this->adminRepository->findById($user->getId());
+        $result = $this->userAdminRepository->findById($user->getId());
 
         $this->assertEquals($user->getId(), $result->getId());
     }
@@ -49,7 +49,7 @@ class AdminRepositoryTest extends TestCase
             'email' => 'john@doe.com',
         ]);
 
-        $result = $this->adminRepository->findByEmail($user->getEmail());
+        $result = $this->userAdminRepository->findByEmail($user->getEmail());
 
         $this->assertNotEmpty($result);
         $this->assertEquals($user->getId(), $result->getId());

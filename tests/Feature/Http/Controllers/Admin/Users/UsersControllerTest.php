@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Http\Controllers\Admin;
+namespace Tests\Feature\Http\Controllers\Admin\Users;
 
 use App\Models\User;
+use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Mockery\MockInterface;
 use Tests\TestCase;
 
 class UsersControllerTest extends TestCase
@@ -24,6 +26,10 @@ class UsersControllerTest extends TestCase
 
     public function test_it_return_response_ok(): void
     {
+        $this->mock(SeoMetaInterface::class, function (MockInterface $mock) {
+            $mock->shouldReceive('setTitle')->once();
+        });
+
         $this->get(route('admin.users.index'))->assertOk();
     }
 }

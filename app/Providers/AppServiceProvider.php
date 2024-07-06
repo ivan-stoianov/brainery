@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Repositories\AdminRepository;
-use App\Repositories\Contracts\AdminInterface;
-use App\Repositories\Contracts\MemberInterface;
 use App\Repositories\Contracts\SettingInterface;
-use App\Repositories\MemberRepository;
+use App\Repositories\Contracts\UserAdminInterface;
+use App\Repositories\Contracts\UserMemberInterface;
 use App\Repositories\SettingRepository;
+use App\Repositories\UserAdminRepository;
+use App\Repositories\UserMemberRepository;
 use App\Services\Contracts\FlashMessageInterface;
 use App\Services\Contracts\SeoMetaInterface;
 use App\Services\FlashMessageService;
@@ -34,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(Html::class, HtmlExtendedService::class);
 
-        $this->app->bind(AdminInterface::class, AdminRepository::class);
-        $this->app->bind(MemberInterface::class, MemberRepository::class);
+        $this->app->bind(UserAdminInterface::class, UserAdminRepository::class);
+        $this->app->bind(UserMemberInterface::class, UserMemberRepository::class);
         $this->app->bind(SettingInterface::class, SettingRepository::class);
 
         $this->registerLocalProviders();
