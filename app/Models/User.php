@@ -69,6 +69,16 @@ class User extends Authenticatable
         return $this->type;
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->getType() === UserType::ADMIN;
+    }
+
+    public function isMember(): bool
+    {
+        return $this->getType() === UserType::MEMBER;
+    }
+
     public function getFirstName(): string
     {
         return $this->first_name;

@@ -24,6 +24,24 @@ class UserTest extends TestCase
         $this->assertEquals(UserType::MEMBER, $user->getType());
     }
 
+    public function test_check_if_is_admin(): void
+    {
+        $user = new User([
+            'type' => UserType::ADMIN,
+        ]);
+
+        $this->assertTrue($user->isAdmin());
+    }
+
+    public function test_check_if_is_member(): void
+    {
+        $user = new User([
+            'type' => UserType::MEMBER,
+        ]);
+
+        $this->assertTrue($user->isMember());
+    }
+
     public function test_has_status(): void
     {
         $user = new User([

@@ -13,14 +13,20 @@
 
 @section('base_content')
     {{-- START: App Header --}}
-    <x-admin.app-header></x-admin.app-header>
+    <x-admin.app-header>
+        <x-slot name="right">
+            <a href="{{ config('app.url') }}" class="btn btn-outline-primary" target="_blank">
+                {{ __('View website') }}
+            </a>
+        </x-slot>
+    </x-admin.app-header>
     {{-- END: App Header --}}
 
     {{-- START: App Sidebar --}}
     <x-admin.app-sidebar>
         <x-slot:header>
             <a href="{{ route('admin.home') }}" class="app-sidebar-logo">
-                {{ config('app.name') }}
+                {{ $app_name }}
             </a>
         </x-slot:header>
         <ul class="app-sidebar-menu">
@@ -44,6 +50,18 @@
                         {{ __('Members') }}
                     </span>
                     @if (request()->routeIs('admin.members.*', 'admin.member.*'))
+                        <i class="fa-solid fa-caret-right opacity-25"></i>
+                    @endif
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.settings.edit') }}"
+                    class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
+                    <span>
+                        <i class="fa-solid fa-cog app-sidebar-icon me-1"></i>
+                        {{ __('Settings') }}
+                    </span>
+                    @if (request()->routeIs('admin.settings.*'))
                         <i class="fa-solid fa-caret-right opacity-25"></i>
                     @endif
                 </a>

@@ -5,30 +5,18 @@ $two-columns-sidebar-width: 300px;
 .two-columns-layout {
     display: grid;
     gap: 1rem;
+    width: 100%;
+    min-width: 100%;
     max-width: 100%;
+}
+
+.two-columns-layout-content {
+    width: 100%;
 }
 
 @include media-breakpoint-up(xl) {
     .two-columns-layout {
-        display: block;
-        position: relative;
+        grid-template-columns: $two-columns-sidebar-width 1fr;
     }
 
-    .two-columns-layout-sidebar {
-        width: $two-columns-sidebar-width;
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-    }
-
-    .two-columns-layout-content {
-        position: relative;
-        top: 0;
-        right: 0;
-        padding-left: 0.5rem;
-        word-wrap: break-word;
-        word-break: break-all;
-        margin-left: calc($two-columns-sidebar-width + 0.5rem);
-    }
 }

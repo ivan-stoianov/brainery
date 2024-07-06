@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Carbon;
+use Carbon\CarbonInterface;
 
 trait HasDefaultGetters
 {
@@ -11,12 +11,12 @@ trait HasDefaultGetters
         return $this->id;
     }
 
-    public function getCreatedAt(): Carbon
+    public function getCreatedAt(): CarbonInterface
     {
         return $this->created_at;
     }
 
-    public function getUpdatedAt(): Carbon
+    public function getUpdatedAt(): CarbonInterface
     {
         return $this->updated_at;
     }
