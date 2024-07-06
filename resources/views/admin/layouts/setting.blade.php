@@ -16,7 +16,7 @@
                 <div class="two-columns-layout-sidebar">
                     <div class="list-group list-group-flush mb-3">
                         <a href="{{ route('admin.settings.edit') }}"
-                            class="list-group-item list-group-item-action py-3 small {{ request()->routeIs('admin.settings.edit') ? 'active' : '' }}">
+                            class="list-group-item list-group-item-action py-3 {{ request()->routeIs('admin.settings.edit') ? 'active' : '' }}">
                             <i class="fa-solid fa-pen-to-square me-2 opacity-50" style="width: 20px;"></i>
                             {{ __('General') }}
                         </a>
