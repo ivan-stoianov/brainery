@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin\Members;
 
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\SeoMeta;
+use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\View\View;
 
 class MembersController extends Controller
 {
     public function __construct(
-        protected readonly SeoMeta $seoMeta,
+        protected readonly SeoMetaInterface $seoMeta,
     ) {
     }
 

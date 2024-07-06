@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\FlashMessage;
+use App\Services\Contracts\FlashMessageInterface;
 use Illuminate\Support\HtmlString;
 use Stringable;
 
-class FlashMessageService implements FlashMessage
+class FlashMessageService implements FlashMessageInterface
 {
     public function __construct()
     {

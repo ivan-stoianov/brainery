@@ -2,9 +2,18 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\MemberInterface;
+use App\Repositories\Contracts\SettingInterface;
+use App\Repositories\MemberRepository;
+use App\Repositories\SettingRepository;
+use App\Services\Contracts\FlashMessageInterface;
+use App\Services\Contracts\SeoMetaInterface;
+use App\Services\FlashMessageService;
 use App\Services\HtmlExtendedService;
+use App\Services\SeoMetaService;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 use Spatie\Html\Html;
@@ -16,16 +25,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(\App\Services\Contracts\SeoMeta::class, \App\Services\SeoMetaService::class);
-        $this->app->bind('seo.meta.tools', \App\Services\SeoMetaService::class);
+        $this->app->bind(SeoMetaInterface::class, SeoMetaService::class);
+        $this->app->bind('seo.meta.tools', SeoMetaService::class);
 
-        $this->app->bind(\App\Services\Contracts\FlashMessage::class, \App\Services\FlashMessageService::class);
-        $this->app->bind('flash.message', \App\Services\FlashMessageService::class);
+        $this->app->bind(FlashMessageInterface::class, FlashMessageService::class);
+        $this->app->bind('flash.message', FlashMessageService::class);
 
         $this->app->singleton(Html::class, HtmlExtendedService::class);
 
-        $this->app->bind(\App\Repositories\Contracts\Member::class, \App\Repositories\MemberRepository::class);
-        $this->app->bind(\App\Repositories\Contracts\SettingInterface::class, \App\Repositories\SettingRepository::class);
+        $this->app->bind(MemberInterface::class, MemberRepository::class);
+        $this->app->bind(SettingInterface::class, SettingRepository::class);
 
         $this->registerLocalProviders();
     }
@@ -61,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
 
     protected function registerCarbonMacros(): void
     {
-        \Illuminate\Support\Carbon::macro('toDateTimeHuman', function () {
+        Carbon::macro('toDateTimeHuman', function () {
             if (now()->subMinutes(10)->lessThan($this)) {
                 return $this->diffForHumans();
             }
@@ -77,7 +86,7 @@ class AppServiceProvider extends ServiceProvider
             return $this->format('d M Y H:i');
         });
 
-        \Illuminate\Support\Carbon::macro('toDateHuman', function () {
+        Carbon::macro('toDateHuman', function () {
             if (now()->subMinutes(10)->lessThan($this)) {
                 return $this->diffForHumans();
             }

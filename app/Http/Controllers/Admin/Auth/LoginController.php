@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\FlashMessage;
-use App\Services\Contracts\SeoMeta;
+use App\Services\Contracts\FlashMessageInterface;
+use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +15,8 @@ use Illuminate\View\View;
 class LoginController extends Controller
 {
     public function __construct(
-        protected readonly SeoMeta $seoMeta,
-        protected readonly FlashMessage $flashMessage
+        protected readonly SeoMetaInterface $seoMeta,
+        protected readonly FlashMessageInterface $flashMessage
     ) {
     }
 

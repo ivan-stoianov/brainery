@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Settings\UpdateSettingRequest;
 use App\Repositories\Contracts\SettingInterface;
 use App\Repositories\Data\UpdateSettingData;
-use App\Services\Contracts\FlashMessage;
-use App\Services\Contracts\SeoMeta;
+use App\Services\Contracts\FlashMessageInterface;
+use App\Services\Contracts\SeoMetaInterface;
 use App\Settings\AppSetting;
 use Error;
 use Exception;
@@ -18,8 +18,8 @@ use Illuminate\View\View;
 class SettingsController extends Controller
 {
     public function __construct(
-        protected readonly SeoMeta $seoMeta,
-        protected readonly FlashMessage $flashMessage,
+        protected readonly SeoMetaInterface $seoMeta,
+        protected readonly FlashMessageInterface $flashMessage,
         protected readonly AppSetting $appSetting,
         protected readonly SettingInterface $settingRepository,
         protected readonly Logger $logger

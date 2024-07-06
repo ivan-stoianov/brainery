@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\SeoMeta;
+use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class HomeController extends Controller
 {
     public function __construct(
-        protected readonly SeoMeta $seoMeta
+        protected readonly SeoMetaInterface $seoMeta
     ) {
     }
 
