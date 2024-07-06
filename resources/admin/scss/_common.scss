@@ -1,0 +1,17 @@
+@import "variables";
+
+label.required::after {
+    content: " *";
+    color: $danger;
+}
+
+.pre-text {
+    font-family: inherit;
+    text-align: left;
+    font-size: inherit;
+    white-space: pre-wrap;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}

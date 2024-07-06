@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Repositories\Contracts\SettingInterface;
-use App\Repositories\Data\UpdateSettingData;
+use App\Data\UpdateSettingData;
+use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Settings\AppSetting;
 use Illuminate\Support\Facades\DB;
 
-class SettingRepository implements SettingInterface
+class SettingRepository implements SettingRepositoryInterface
 {
     public function __construct(
         protected readonly AppSetting $appSetting

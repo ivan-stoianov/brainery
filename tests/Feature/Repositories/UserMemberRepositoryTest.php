@@ -4,28 +4,28 @@ namespace Tests\Feature\Repositories;
 
 use App\Enums\UserType;
 use App\Models\User;
-use App\Repositories\Contracts\MemberInterface;
+use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class MemberRepositoryTest extends TestCase
+class UserMemberRepositoryTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    protected MemberInterface $memberRepository;
+    protected UserMemberRepositoryInterface $userMemberRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->memberRepository = app()->make(MemberInterface::class);
+        $this->userMemberRepository = app()->make(UserMemberRepositoryInterface::class);
     }
 
     public function test_query(): void
     {
-        $result = $this->memberRepository->query();
+        $result = $this->userMemberRepository->query();
 
         $this->assertTrue(
             in_array(UserType::MEMBER->value, $result->getQuery()->bindings['where'])
@@ -38,7 +38,7 @@ class MemberRepositoryTest extends TestCase
     {
         $member = User::factory()->member()->create();
 
-        $result = $this->memberRepository->findById($member->getId());
+        $result = $this->userMemberRepository->findById($member->getId());
 
         $this->assertEquals($member->getId(), $result->getId());
     }
@@ -49,7 +49,7 @@ class MemberRepositoryTest extends TestCase
             'email' => 'john@doe.com',
         ]);
 
-        $result = $this->memberRepository->findByEmail($member->getEmail());
+        $result = $this->userMemberRepository->findByEmail($member->getEmail());
 
         $this->assertNotEmpty($result);
         $this->assertEquals($member->getId(), $result->getId());

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Admin\Members\Index;
 
-use App\Repositories\Contracts\MemberInterface;
+use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
@@ -16,7 +16,7 @@ class Page extends Component
 {
     use WithPagination;
 
-    protected $memberRepository;
+    protected $userMemberRepository;
 
     #[Url()]
     public $sort_by = 'first_name';
@@ -37,9 +37,9 @@ class Page extends Component
         300 => 300,
     ];
 
-    public function boot(MemberInterface $memberRepository): void
+    public function boot(UserMemberRepositoryInterface $userMemberRepository): void
     {
-        $this->memberRepository = $memberRepository;
+        $this->userMemberRepository = $userMemberRepository;
     }
 
     public function render(): View
@@ -61,7 +61,7 @@ class Page extends Component
 
     protected function getMembers(): LengthAwarePaginator
     {
-        $query = $this->memberRepository->query();
+        $query = $this->userMemberRepository->query();
 
         $query = $this->applySearch($query);
         $query = $this->applySorting($query);

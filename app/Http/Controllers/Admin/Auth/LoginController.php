@@ -6,7 +6,6 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\FlashMessageInterface;
 use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,8 +16,7 @@ use Illuminate\View\View;
 class LoginController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaInterface $seoMeta,
-        protected readonly FlashMessageInterface $flashMessage
+        protected readonly SeoMetaInterface $seoMeta
     ) {
     }
 
@@ -61,8 +59,6 @@ class LoginController extends Controller
             RateLimiter::clear($rateLimiterKey);
 
             $request->session()->regenerate();
-
-            $this->flashMessage->success(__('Success'));
 
             return redirect()->intended(route('admin.home'));
         } else {

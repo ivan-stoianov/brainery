@@ -24,6 +24,12 @@ class HtmlExtendedService extends Html
             ->class(['form-label']);
     }
 
+    public function labelRequired($contents = null, $for = null): Label
+    {
+        return parent::label($contents, $for)
+            ->class(['form-label', 'required']);
+    }
+
     public function select($name = null, $options = [], $value = null): Select
     {
         return parent::select($name, $options, $value)
@@ -106,6 +112,12 @@ class HtmlExtendedService extends Html
         return parent::submit($text ? $text : __('Submit'))
             ->class(['btn', 'btn-primary'])
             ->data('testid', 'button-submit');
+    }
+
+    public function buttonCancel($href = null, $contents = null)
+    {
+        return parent::a($href, $contents ? $contents : __('Cancel'))
+            ->class(['btn', 'btn-link', 'ms-2', 'text-decoration-none']);
     }
 
     public function error(?string $name): Div

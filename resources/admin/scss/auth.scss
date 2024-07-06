@@ -13,6 +13,9 @@ $fa-font-path: "~fontawesome/webfonts";
 @import "@fortawesome/fontawesome-free/scss/solid.scss";
 @import "@fortawesome/fontawesome-free/scss/v4-shims.scss";
 
+// Components
+// ====================================
+@import "common";
 
 .auth-layout {
     min-height: 100vh;
