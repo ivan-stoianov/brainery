@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin\Settings;
 
 use App\Http\Controllers\Controller;
@@ -40,7 +42,7 @@ class SettingsController extends Controller
     {
         try {
             $data = new UpdateSettingData(
-                app_name: $request->string('app_name'),
+                app_name: (string) $request->string('app_name'),
                 registration_enabled: $request->boolean('registration_enabled'),
             );
 

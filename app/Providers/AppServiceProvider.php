@@ -1,7 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
+use App\Repositories\AdminRepository;
+use App\Repositories\Contracts\AdminInterface;
 use App\Repositories\Contracts\MemberInterface;
 use App\Repositories\Contracts\SettingInterface;
 use App\Repositories\MemberRepository;
@@ -20,9 +24,6 @@ use Spatie\Html\Html;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         $this->app->bind(SeoMetaInterface::class, SeoMetaService::class);
@@ -33,15 +34,13 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(Html::class, HtmlExtendedService::class);
 
+        $this->app->bind(AdminInterface::class, AdminRepository::class);
         $this->app->bind(MemberInterface::class, MemberRepository::class);
         $this->app->bind(SettingInterface::class, SettingRepository::class);
 
         $this->registerLocalProviders();
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
         Paginator::useBootstrapFive();

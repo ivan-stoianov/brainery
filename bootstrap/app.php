@@ -1,6 +1,9 @@
 <?php
 
-use App\Exceptions\MemberNotFoundException;
+declare(strict_types=1);
+
+use App\Exceptions\Admin\UserAdminNotFoundException;
+use App\Exceptions\Admin\UserMemberNotFoundException;
 use App\Facades\SeoMeta;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -28,11 +31,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (MemberNotFoundException $e, Request $request) {
+        $exceptions->render(function (UserMemberNotFoundException $e, Request $request) {
             SeoMeta::setTitle(__('Member not found.'));
 
-            if ($request->isAdmin()) {
-                return response()->view('admin.errors.member-not-found', [], Response::HTTP_NOT_FOUND);
-            }
+            return response()->view('admin.errors.member-not-found', [], Response::HTTP_NOT_FOUND);
+        });
+        $exceptions->render(function (UserAdminNotFoundException $e, Request $request) {
+            SeoMeta::setTitle(__('User admin not found.'));
+
+            return response()->view('admin.errors.user-not-found', [], Response::HTTP_NOT_FOUND);
         });
     })->create();

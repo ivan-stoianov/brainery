@@ -55,6 +55,18 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.users.index') }}"
+                    class="{{ request()->routeIs('admin.users.*', 'admin.user.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
+                    <span>
+                        <i class="fa-solid fa-user app-sidebar-icon me-1"></i>
+                        {{ __('Users') }}
+                    </span>
+                    @if (request()->routeIs('admin.users.*', 'admin.user.*'))
+                        <i class="fa-solid fa-caret-right opacity-25"></i>
+                    @endif
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.settings.edit') }}"
                     class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }} d-flex align-items-center justify-content-between">
                     <span>

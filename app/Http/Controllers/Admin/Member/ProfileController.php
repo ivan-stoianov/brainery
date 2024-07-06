@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin\Member;
 
-use App\Exceptions\MemberNotFoundException;
+use App\Exceptions\Admin\UserMemberNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\MemberInterface;
 use App\Services\Contracts\SeoMetaInterface;
@@ -21,7 +23,7 @@ class ProfileController extends Controller
         $member = $this->memberRepository->findById($memberId);
 
         if (!$member) {
-            throw new MemberNotFoundException();
+            throw new UserMemberNotFoundException();
         }
 
         $this->seoMeta->setTitle($member->getName());
