@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\Member\ProfileController;
+use App\Http\Controllers\Admin\Member\ProfileController as MemberProfileController;
 use App\Http\Controllers\Admin\Members\MembersController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
+use App\Http\Controllers\Admin\User\ProfileController as UserProfileController;
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('admin.guest')->group(function () {
@@ -20,10 +22,15 @@ Route::middleware('admin.auth')->group(function () {
     Route::get('members', [MembersController::class, 'index'])->name('members.index');
 
     Route::prefix('member/{member}')->group(function () {
-        Route::get('/', [ProfileController::class, 'show'])->name('member.show');
+        Route::get('/', [MemberProfileController::class, 'show'])->name('member.show');
     });
 
-    Route::prefix('settings')->name('settings.')->group(function() {
+    Route::get('users', [UsersController::class, 'index'])->name('users.index');
+    Route::prefix('user/{user}')->group(function () {
+        Route::get('/', [UserProfileController::class, 'show'])->name('user.show');
+    });
+
+    Route::prefix('settings')->name('settings.')->group(function () {
         Route::get('/', [SettingsController::class, 'edit'])->name('edit');
         Route::put('/', [SettingsController::class, 'update'])->name('update');
     });
