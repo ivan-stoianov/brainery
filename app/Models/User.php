@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Casts\Email;
+use App\Casts\FirstName;
+use App\Casts\LastName;
 use App\Enums\UserType;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,8 +49,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'active' => 'boolean',
             'type' => UserType::class,
+            'active' => 'boolean',
+            'first_name' => FirstName::class,
+            'last_name' => LastName::class,
             'email' => Email::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
