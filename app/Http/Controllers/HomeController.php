@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Contracts\SeoMeta;
+use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function __construct(
-        protected readonly SeoMeta $seoMeta
+        protected readonly SeoMetaInterface $seoMeta
     ) {
     }
 

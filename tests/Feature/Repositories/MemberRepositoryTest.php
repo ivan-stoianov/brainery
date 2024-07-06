@@ -4,7 +4,7 @@ namespace Tests\Feature\Repositories;
 
 use App\Enums\UserType;
 use App\Models\User;
-use App\Repositories\Contracts\Member;
+use App\Repositories\Contracts\MemberInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,13 +14,13 @@ class MemberRepositoryTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
-    protected Member $memberRepository;
+    protected MemberInterface $memberRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->memberRepository = app()->make(Member::class);
+        $this->memberRepository = app()->make(MemberInterface::class);
     }
 
     public function test_query(): void

@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\User;
-use App\Repositories\Contracts\Member;
-use Illuminate\Cache\Repository as Cache;
+use App\Repositories\Contracts\MemberInterface;
+use Illuminate\Contracts\Cache\Repository as CacheInterface;
 use Illuminate\Database\Eloquent\Builder;
 
-class MemberRepository implements Member
+class MemberRepository implements MemberInterface
 {
     public function __construct(
         protected readonly User $user,
-        protected readonly Cache $cacheRepository
+        protected readonly CacheInterface $cacheRepository
     ) {
     }
 
@@ -22,14 +22,14 @@ class MemberRepository implements Member
         return $this->user->newQuery()->onlyMember();
     }
 
-    public function findById(int $id): User|null
+    public function findById(int $id): ?User
     {
         return $this->cacheRepository->remember("members.{$id}", 60 * 5, function () use ($id) {
             return $this->user->find($id);
         });
     }
 
-    public function findByEmail(string $email): User|null
+    public function findByEmail(string $email): ?User
     {
         return $this->cacheRepository->remember("members.{$email}", 60 * 5, function () use ($email) {
             return $this->query()->where('email', '=', $email)->first();

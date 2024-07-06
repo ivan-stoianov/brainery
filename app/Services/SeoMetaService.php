@@ -2,12 +2,12 @@
 
 namespace App\Services;
 
-use App\Services\Contracts\SeoMeta as Contract;
+use App\Services\Contracts\SeoMetaInterface;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\HtmlString;
 use Stringable;
 
-class SeoMetaService implements Contract
+class SeoMetaService implements SeoMetaInterface
 {
     public function generate(): Stringable
     {
