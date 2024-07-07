@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
+use App\Services\Contracts\ActivityLogServiceInterface;
 use App\Services\Contracts\SeoMetaInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -16,7 +17,8 @@ use Illuminate\View\View;
 class LoginController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaInterface $seoMeta
+        protected readonly SeoMetaInterface $seoMeta,
+        protected readonly ActivityLogServiceInterface $activityLogServiceInterface
     ) {
     }
 
@@ -29,10 +31,12 @@ class LoginController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
+        $request->validate(
+            [
             'email' => ['required', 'email'],
             'password' => ['required'],
-        ]);
+            ]
+        );
 
         $rateLimiterKey = sprintf('admin.login:%s', $request->get('email'));
         $rateLimiterPerMinute = 5;
@@ -40,13 +44,15 @@ class LoginController extends Controller
         if (RateLimiter::tooManyAttempts($rateLimiterKey, $rateLimiterPerMinute)) {
             $seconds = RateLimiter::availableIn($rateLimiterKey);
 
-            return redirect()->back()->withInput()->withErrors([
-                'email' => trans('auth.throttle', ['seconds' => $seconds]),
-            ]);
+            return redirect()->back()->withInput()->withErrors(
+                [
+                    'email' => trans('auth.throttle', ['seconds' => $seconds])
+                ]
+            );
         }
 
-        $email = $request->string('email');
-        $password = $request->string('password');
+        $email = $request->get('email');
+        $password = $request->get('password');
 
         $credentials = [
             'type' => UserType::ADMIN,
@@ -60,13 +66,24 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
+            $user = Auth::user();
+
+            $this->activityLogServiceInterface->record(
+                description: __('Authenticated.'),
+                event: "admin.auth.login",
+                causer: $user,
+                subject: $user,
+            );
+
             return redirect()->intended(route('admin.home'));
         } else {
             RateLimiter::increment($rateLimiterKey);
 
-            return redirect()->back()->withInput()->withErrors([
+            return redirect()->back()->withInput()->withErrors(
+                [
                 'email' => trans('auth.failed'),
-            ]);
+                ]
+            );
         }
 
         return redirect()->back();
@@ -74,6 +91,15 @@ class LoginController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
+        $user = Auth::user();
+
+        $this->activityLogServiceInterface->record(
+            description: __('Logout.'),
+            event: "admin.auth.logout",
+            causer: $user,
+            subject: $user,
+        );
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
