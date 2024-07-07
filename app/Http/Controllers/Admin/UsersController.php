@@ -7,8 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Data\CreateUserAdminData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\CreateUserRequest;
-use App\Services\Contracts\FlashMessageInterface;
-use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\FlashMessageServiceInterface;
+use App\Services\Contracts\SeoMetaServiceInterface;
 use App\Services\Contracts\UserAdminServiceInterface;
 use Error;
 use Exception;
@@ -20,8 +20,8 @@ use Psr\Log\LoggerInterface;
 class UsersController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaInterface $seoMeta,
-        protected readonly FlashMessageInterface $flashMessage,
+        protected readonly SeoMetaServiceInterface $seoMeta,
+        protected readonly FlashMessageServiceInterface $flashMessage,
         protected readonly LoggerInterface $logger,
         protected readonly UserAdminServiceInterface $userAdminService
     ) {

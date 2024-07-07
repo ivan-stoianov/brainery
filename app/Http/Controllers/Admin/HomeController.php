@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\SeoMetaServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
@@ -14,7 +14,7 @@ use Illuminate\View\View;
 class HomeController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaInterface $seoMeta
+        protected readonly SeoMetaServiceInterface $seoMeta
     ) {
     }
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Http\Controllers\Admin\Users;
 
 use App\Models\User;
-use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\SeoMetaServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Mockery\MockInterface;
@@ -26,7 +26,7 @@ class UsersControllerTest extends TestCase
 
     public function test_it_return_response_ok(): void
     {
-        $this->mock(SeoMetaInterface::class, function (MockInterface $mock) {
+        $this->mock(SeoMetaServiceInterface::class, function (MockInterface $mock) {
             $mock->shouldReceive('setTitle')->once();
         });
 
