@@ -6,7 +6,7 @@ namespace App\Services\Contracts;
 
 use Stringable;
 
-interface FlashMessageInterface
+interface FlashMessageServiceInterface
 {
     public function success(string $message): void;
 

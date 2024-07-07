@@ -29,7 +29,7 @@ class UserAdminService implements UserAdminServiceInterface
 
                 $this->activityLogService->record(
                     description: __('User :name has been registered.', ['name' => $newUser->getName()]),
-                    event: "users.admin.created",
+                    event: "admin.users.admin.created",
                     subject: $newUser,
                     causer: $author
                 );

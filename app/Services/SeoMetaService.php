@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\SeoMetaServiceInterface;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Illuminate\Support\HtmlString;
 use Stringable;
 
-class SeoMetaService implements SeoMetaInterface
+class SeoMetaService implements SeoMetaServiceInterface
 {
     public function generate(): Stringable
     {
