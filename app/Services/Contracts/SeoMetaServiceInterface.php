@@ -6,7 +6,7 @@ namespace App\Services\Contracts;
 
 use Stringable;
 
-interface SeoMetaInterface
+interface SeoMetaServiceInterface
 {
     public function generate(): Stringable;
 

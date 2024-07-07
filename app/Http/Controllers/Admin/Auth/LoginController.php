@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\ActivityLogServiceInterface;
-use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\SeoMetaServiceInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,7 @@ use Illuminate\View\View;
 class LoginController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaInterface $seoMeta,
+        protected readonly SeoMetaServiceInterface $seoMeta,
         protected readonly ActivityLogServiceInterface $activityLogServiceInterface
     ) {
     }

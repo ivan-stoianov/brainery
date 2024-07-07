@@ -7,13 +7,13 @@ namespace App\Http\Controllers\Admin\Member;
 use App\Exceptions\Admin\UserMemberNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\UserMemberRepositoryInterface;
-use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\SeoMetaServiceInterface;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaInterface $seoMeta,
+        protected readonly SeoMetaServiceInterface $seoMeta,
         protected readonly UserMemberRepositoryInterface $userMemberRepository
     ) {
     }

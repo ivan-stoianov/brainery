@@ -12,8 +12,8 @@ use App\Repositories\UserAdminRepository;
 use App\Repositories\UserMemberRepository;
 use App\Services\ActivityLogService;
 use App\Services\Contracts\ActivityLogServiceInterface;
-use App\Services\Contracts\FlashMessageInterface;
-use App\Services\Contracts\SeoMetaInterface;
+use App\Services\Contracts\FlashMessageServiceInterface;
+use App\Services\Contracts\SeoMetaServiceInterface;
 use App\Services\Contracts\UserAdminServiceInterface;
 use App\Services\FlashMessageService;
 use App\Services\HtmlExtendedService;
@@ -30,10 +30,10 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        $this->app->bind(SeoMetaInterface::class, SeoMetaService::class);
+        $this->app->bind(SeoMetaServiceInterface::class, SeoMetaService::class);
         $this->app->bind('seo.meta.tools', SeoMetaService::class);
 
-        $this->app->bind(FlashMessageInterface::class, FlashMessageService::class);
+        $this->app->bind(FlashMessageServiceInterface::class, FlashMessageService::class);
         $this->app->bind('flash.message', FlashMessageService::class);
 
         $this->app->singleton(Html::class, HtmlExtendedService::class);

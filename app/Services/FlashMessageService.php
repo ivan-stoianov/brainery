@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Services\Contracts\FlashMessageInterface;
+use App\Services\Contracts\FlashMessageServiceInterface;
 use Illuminate\Support\HtmlString;
 use Stringable;
 
-class FlashMessageService implements FlashMessageInterface
+class FlashMessageService implements FlashMessageServiceInterface
 {
     public function __construct()
     {
