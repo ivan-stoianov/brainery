@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Repositories\Contracts;
 
 use App\Data\CreateUserAdminData;
+use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 interface UserAdminRepositoryInterface
 {
     public function query(): Builder;
 
-    public function findById(int $id): ?Model;
+    public function findById(int $id): ?User;
 
-    public function findByEmail(string $email): ?Model;
+    public function findByEmail(string $email): ?User;
 
-    public function register(CreateUserAdminData $data): Model;
+    public function register(CreateUserAdminData $data): ?User;
 }

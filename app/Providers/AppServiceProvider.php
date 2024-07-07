@@ -10,6 +10,8 @@ use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use App\Repositories\SettingRepository;
 use App\Repositories\UserAdminRepository;
 use App\Repositories\UserMemberRepository;
+use App\Services\ActivityLogService;
+use App\Services\Contracts\ActivityLogServiceInterface;
 use App\Services\Contracts\FlashMessageInterface;
 use App\Services\Contracts\SeoMetaInterface;
 use App\Services\Contracts\UserAdminServiceInterface;
@@ -41,6 +43,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
 
         $this->app->bind(UserAdminServiceInterface::class, UserAdminService::class);
+        $this->app->bind(ActivityLogServiceInterface::class, ActivityLogService::class);
 
         $this->registerLocalProviders();
     }

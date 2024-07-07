@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Repositories\Contracts\UserAdminRepositoryInterface;
 use Illuminate\Contracts\Cache\Repository as CacheInterface;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -29,39 +28,49 @@ class UserAdminRepository implements UserAdminRepositoryInterface
 
     public function findById(int $id): ?User
     {
-        return $this->cacheRepository->remember("users.admin.{$id}", 60 * 5, function () use ($id) {
-            return $this->query()->find($id);
-        });
+        return $this->cacheRepository->remember(
+            "users.admin.{$id}", 60 * 5, function () use ($id) {
+                return $this->query()->find($id);
+            }
+        );
     }
 
     public function findByEmail(string $email): ?User
     {
-        return $this->cacheRepository->remember("users.admin.{$email}", 60 * 5, function () use ($email) {
-            return $this->query()->where('email', '=', $email)->first();
-        });
+        return $this->cacheRepository->remember(
+            "users.admin.{$email}", 60 * 5, function () use ($email) {
+                return $this->query()->where('email', '=', $email)->first();
+            }
+        );
     }
 
-    public function register(CreateUserAdminData $data): Model
+    public function register(CreateUserAdminData $data): User
     {
-        return DB::transaction(function () use ($data) {
-            $user  = $this->user->create([
-                'admin' => $data->active,
-                'type' => UserType::ADMIN,
-                'first_name' => $data->first_name,
-                'last_name' => $data->last_name,
-                'email' => $data->email,
-                'password' => Hash::make($data->password),
-            ]);
+        return DB::transaction(
+            function () use ($data) {
+                $user  = $this->user->create(
+                    [
+                    'admin' => $data->active,
+                    'type' => UserType::ADMIN,
+                    'first_name' => $data->first_name,
+                    'last_name' => $data->last_name,
+                    'email' => $data->email,
+                    'password' => Hash::make($data->password),
+                    ]
+                );
 
-            return $user;
-        });
+                return $user;
+            }
+        );
     }
 
     protected function clearMemberCache(User $member): bool
     {
-        return $this->cacheRepository->deleteMultiple([
+        return $this->cacheRepository->deleteMultiple(
+            [
             "users.admin.{$member->getId()}",
             "users.admin.{$member->getEmail()}",
-        ]);
+            ]
+        );
     }
 }

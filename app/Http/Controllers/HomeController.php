@@ -11,8 +11,7 @@ class HomeController extends Controller
 {
     public function __construct(
         protected readonly SeoMetaInterface $seoMeta
-    ) {
-    }
+    ) {}
 
     public function index(): View
     {

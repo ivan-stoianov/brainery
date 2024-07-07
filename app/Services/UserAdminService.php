@@ -6,7 +6,9 @@ namespace App\Services;
 
 use App\Data\CreateUserAdminData;
 use App\Events\UserAdminCreated;
+use App\Models\User;
 use App\Repositories\Contracts\UserAdminRepositoryInterface;
+use App\Services\Contracts\ActivityLogServiceInterface;
 use App\Services\Contracts\UserAdminServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -14,17 +16,28 @@ use Illuminate\Support\Facades\DB;
 class UserAdminService implements UserAdminServiceInterface
 {
     public function __construct(
-        protected readonly UserAdminRepositoryInterface $userAdminRepository
-    ) {}
+        protected readonly UserAdminRepositoryInterface $userAdminRepository,
+        protected readonly ActivityLogServiceInterface $activityLogService,
+    ) {
+    }
 
-    public function register(CreateUserAdminData $data): Model
+    public function register(CreateUserAdminData $data, User $author): Model
     {
-        return DB::transaction(function () use ($data) {
-            $user = $this->userAdminRepository->register($data);
+        return DB::transaction(
+            function () use ($data, $author) {
+                $newUser = $this->userAdminRepository->register($data);
 
-            UserAdminCreated::dispatch($user->getId());
+                $this->activityLogService->record(
+                    description: __('User :name has been registered.', ['name' => $newUser->getName()]),
+                    event: "users.admin.created",
+                    subject: $newUser,
+                    causer: $author
+                );
 
-            return $user;
-        });
+                UserAdminCreated::dispatch($newUser->getId());
+
+                return $newUser;
+            }
+        );
     }
 }

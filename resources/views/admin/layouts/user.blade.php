@@ -17,7 +17,7 @@
                             <i class="fa-regular fa-user me-2 opacity-50" style="width: 20px;"></i>
                             {{ __('Profile') }}
                         </a>
-                        <a href="#"
+                        <a href="{{ route('admin.user.activity-log.index', $user) }}"
                             class="list-group-item list-group-item-action py-3 {{ request()->routeIs('admin.user.activity-log.*') ? 'active' : '' }}">
                             <i class="fa-solid fa-file-invoice me-2 opacity-50" style="width: 20px;"></i>
                             {{ __('Activity log') }}

@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\Member\ProfileController as MemberProfileController;
 use App\Http\Controllers\Admin\Members\MembersController;
 use App\Http\Controllers\Admin\Settings\SettingsController;
+use App\Http\Controllers\Admin\User\ActivityLogController;
 use App\Http\Controllers\Admin\User\ProfileController as UserProfileController;
 use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::middleware('admin.auth')->group(function () {
     Route::resource('users', UsersController::class)->only(['index', 'create', 'store']);
     Route::prefix('user/{user}')->group(function () {
         Route::get('/', [UserProfileController::class, 'show'])->name('user.show');
+        Route::get('activity-log', [ActivityLogController::class, 'index'])->name('user.activity-log.index');
     });
 
     Route::prefix('settings')->name('settings.')->group(function () {
