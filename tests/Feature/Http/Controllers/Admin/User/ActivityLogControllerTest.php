@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ProfileControllerTest extends TestCase
+class ActivityLogControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -21,10 +21,9 @@ class ProfileControllerTest extends TestCase
         $this->actingAs($this->user);
     }
 
-    public function test_it_return_response_ok(): void
+    public function test_it_return_response_ok():void
     {
-        $admin = User::factory()->admin()->create();
-
-        $this->get(route('admin.user.show', $admin))->assertOk();
+        $this->get(route('admin.user.activity-log.index', $this->user))
+            ->assertOk();
     }
 }
