@@ -7,58 +7,60 @@ namespace App\Http\Controllers\Admin\Settings;
 use App\Data\UpdateSettingData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Settings\UpdateSettingRequest;
-use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Services\Contracts\FlashMessageServiceInterface;
 use App\Services\Contracts\SeoMetaServiceInterface;
+use App\Services\Contracts\SettingServiceInterface;
 use App\Settings\AppSetting;
 use Error;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Log\Logger;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class SettingsController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaServiceInterface $seoMeta,
-        protected readonly FlashMessageServiceInterface $flashMessage,
+        protected readonly SeoMetaServiceInterface $seoMetaService,
+        protected readonly FlashMessageServiceInterface $flashMessageService,
         protected readonly AppSetting $appSetting,
-        protected readonly SettingRepositoryInterface $settingRepository,
+        protected readonly SettingServiceInterface $settingService,
         protected readonly Logger $logger
     ) {
     }
 
     public function edit(): View
     {
-        $this->seoMeta->setTitle(__('Settings'));
+        $this->seoMetaService->setTitle(__('Settings'));
 
-        return view('admin.settings.edit', [
+        return view(
+            'admin.settings.edit', [
             'app_name' => $this->appSetting->name,
             'registration_enabled' => $this->appSetting->registration_enabled,
-        ]);
+            ]
+        );
     }
 
     public function update(UpdateSettingRequest $request): RedirectResponse
     {
         try {
             $data = new UpdateSettingData(
-                app_name: (string) $request->string('app_name'),
+                app_name: $request->get('app_name'),
                 registration_enabled: $request->boolean('registration_enabled'),
             );
 
-            $saved = $this->settingRepository->update($data);
-
+            $saved = $this->settingService->update($data, Auth::user());
             if (!$saved) {
                 throw new Exception(__('The settings not saved.'));
             }
 
-            $this->flashMessage->success(
+            $this->flashMessageService->success(
                 __('Settings has been updated.')
             );
         } catch (Exception | Error $e) {
             $this->logger->error($e->getMessage());
 
-            $this->flashMessage->internalServerError();
+            $this->flashMessageService->internalServerError();
         }
 
         return redirect()->back();
