@@ -13,6 +13,7 @@ use App\Services\Contracts\UserAdminServiceInterface;
 use Error;
 use Exception;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Psr\Log\LoggerInterface;
 
@@ -50,7 +51,7 @@ class UsersController extends Controller
                 password: $request->get('password'),
             );
 
-            $user = $this->userAdminService->register($data);
+            $user = $this->userAdminService->register($data, Auth::user());
 
             $this->flashMessage->success(
                 __('New user has been registered.')
