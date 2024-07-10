@@ -9,7 +9,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
+#[Group("repository")]
+#[Group("user")]
+#[Group("admin")]
 class UserAdminRepositoryTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

@@ -20,48 +20,43 @@ use Psr\Log\LoggerInterface;
 class UsersController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaServiceInterface $seoMeta,
-        protected readonly FlashMessageServiceInterface $flashMessage,
-        protected readonly LoggerInterface $logger,
+        protected readonly SeoMetaServiceInterface $seoMetaService,
+        protected readonly FlashMessageServiceInterface $flashMessageService,
+        protected readonly LoggerInterface $logService,
         protected readonly UserAdminServiceInterface $userAdminService
     ) {
     }
 
     public function index(): View
     {
-        $this->seoMeta->setTitle(__('Users'));
+        $this->seoMetaService->setTitle(__('Users'));
 
         return view('admin.users.index');
     }
 
     public function create(): View
     {
-        $this->seoMeta->setTitle(__('Users'));
+        $this->seoMetaService->setTitle(__('Users'));
 
         return view('admin.users.create');
     }
 
     public function store(CreateUserRequest $request): RedirectResponse
     {
+        $data = CreateUserAdminData::fromArray(
+            $request->only(['first_name', 'last_name', 'email', 'password'])
+        );
+
         try {
-            $data = new CreateUserAdminData(
-                first_name: $request->get('first_name'),
-                last_name: $request->get('last_name'),
-                email: $request->get('email'),
-                password: $request->get('password'),
-            );
-
             $user = $this->userAdminService->register($data, Auth::user());
-
-            $this->flashMessage->success(
+            $this->flashMessageService->success(
                 __('New user has been registered.')
             );
 
             return redirect()->route('admin.user.show', $user);
         } catch (Exception | Error $e) {
-            $this->logger->error($e->getMessage());
-
-            $this->flashMessage->internalServerError();
+            $this->logService->error($e->getMessage());
+            $this->flashMessageService->internalServerError();
 
             return redirect()->back()->withInput();
         }

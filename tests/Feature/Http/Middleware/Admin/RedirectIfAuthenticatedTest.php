@@ -6,7 +6,11 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Group;
 
+#[Group("admin")]
+#[Group("middleware")]
+#[Group("auth")]
 class RedirectIfAuthenticatedTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

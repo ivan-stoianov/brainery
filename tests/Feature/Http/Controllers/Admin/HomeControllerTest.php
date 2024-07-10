@@ -8,8 +8,10 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\Response;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
+#[Group("admin")]
 class HomeControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

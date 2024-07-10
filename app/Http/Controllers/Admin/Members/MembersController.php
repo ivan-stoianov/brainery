@@ -11,13 +11,13 @@ use Illuminate\View\View;
 class MembersController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaServiceInterface $seoMeta,
+        protected readonly SeoMetaServiceInterface $seoMetaService,
     ) {
     }
 
     public function index(): View
     {
-        $this->seoMeta->setTitle(__('Members'));
+        $this->seoMetaService->setTitle(__('Members'));
 
         return view('admin.members.index');
     }

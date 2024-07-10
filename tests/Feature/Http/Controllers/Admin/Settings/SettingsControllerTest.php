@@ -8,8 +8,11 @@ use App\Models\User;
 use App\Settings\AppSetting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
+#[Group("admin")]
+#[Group("settings")]
 class SettingsControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

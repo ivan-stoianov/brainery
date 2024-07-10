@@ -10,8 +10,12 @@ use App\Services\Contracts\SeoMetaServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
+#[Group("admin")]
+#[Group("users")]
+#[Group("registration")]
 class UserRegistrationTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
@@ -122,6 +126,18 @@ class UserRegistrationTest extends TestCase
         $this->post(route('admin.users.store'), [
             'email' => $email,
         ])->assertInvalid('email');
+    }
+
+    public function test_email_must_be_unique(): void
+    {
+        $user = User::factory()->admin()->create([
+            'email' => 'john@doe.com',
+        ]);
+
+        $this->post(route('admin.users.store'), [
+            'email' => 'john@doe.com',
+        ])
+            ->assertInvalid('email');
     }
 
     public function test_it_require_password_field(): void

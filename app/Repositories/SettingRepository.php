@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Data\UpdateSettingData;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Settings\AppSetting;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class SettingRepository implements SettingRepositoryInterface
@@ -19,19 +20,11 @@ class SettingRepository implements SettingRepositoryInterface
     public function update(UpdateSettingData $data): bool
     {
         return DB::transaction(function () use ($data) {
-            $results = [];
-
             $this->appSetting->name = $data->app_name;
             $this->appSetting->registration_enabled = $data->registration_enabled;
 
             if (!$this->appSetting->save()) {
-                $results[] = false;
-            }
-
-            foreach ($results as $result) {
-                if (!$result) {
-                    return false;
-                }
+                throw new Exception(__('The app settings cannot be saved.'));
             }
 
             return true;
