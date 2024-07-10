@@ -9,8 +9,11 @@ use App\Services\Contracts\SeoMetaServiceInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Mockery\MockInterface;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
+#[Group("admin")]
+#[Group("users")]
 class UsersControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

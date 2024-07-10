@@ -51,6 +51,11 @@ class User extends Authenticatable
         return $this->active;
     }
 
+    public function getActive(): bool
+    {
+        return $this->active;
+    }
+
     public function getType(): UserType
     {
         return $this->type;

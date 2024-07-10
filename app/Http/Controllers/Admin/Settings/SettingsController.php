@@ -25,7 +25,7 @@ class SettingsController extends Controller
         protected readonly FlashMessageServiceInterface $flashMessageService,
         protected readonly AppSetting $appSetting,
         protected readonly SettingServiceInterface $settingService,
-        protected readonly Logger $logger
+        protected readonly Logger $logService
     ) {
     }
 
@@ -33,32 +33,29 @@ class SettingsController extends Controller
     {
         $this->seoMetaService->setTitle(__('Settings'));
 
-        return view(
-            'admin.settings.edit', [
+        return view('admin.settings.edit', [
             'app_name' => $this->appSetting->name,
             'registration_enabled' => $this->appSetting->registration_enabled,
-            ]
-        );
+        ]);
     }
 
     public function update(UpdateSettingRequest $request): RedirectResponse
     {
+        $data = UpdateSettingData::fromArray([
+            'app_name' => $request->get('app_name'),
+            'registration_enabled' => $request->boolean('registration_enabled'),
+        ]);
+
         try {
-            $data = new UpdateSettingData(
-                app_name: $request->get('app_name'),
-                registration_enabled: $request->boolean('registration_enabled'),
-            );
-
             $saved = $this->settingService->update($data, Auth::user());
-            if (!$saved) {
-                throw new Exception(__('The settings not saved.'));
-            }
 
-            $this->flashMessageService->success(
-                __('Settings has been updated.')
-            );
+            if ($saved) {
+                $this->flashMessageService->success(
+                    __('Settings has been updated.')
+                );
+            }
         } catch (Exception | Error $e) {
-            $this->logger->error($e->getMessage());
+            $this->logService->error($e->getMessage());
 
             $this->flashMessageService->internalServerError();
         }

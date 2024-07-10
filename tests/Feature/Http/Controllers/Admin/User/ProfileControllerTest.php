@@ -5,8 +5,13 @@ namespace Tests\Feature\Http\Controllers\Admin\User;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
+#[Group("admin")]
+#[Group("user")]
+#[Group("profile")]
+#[Group("controller")]
 class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

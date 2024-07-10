@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Admin\Users;
+namespace App\Http\Requests\Admin\User\Settings;
 
 use App\Rules\FirstName;
 use App\Rules\LastName;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
-class CreateUserRequest extends FormRequest
+class UpdateUserAdminRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -37,21 +35,6 @@ class CreateUserRequest extends FormRequest
                 'min:2',
                 'max:40',
                 new LastName(),
-            ],
-            'email' => [
-                'required',
-                'email',
-                'max:100',
-                Rule::unique('users', 'email'),
-            ],
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(12)
-                    ->letters()
-                    ->numbers()
-                    ->symbols()
-                    ->mixedCase()
             ],
         ];
     }

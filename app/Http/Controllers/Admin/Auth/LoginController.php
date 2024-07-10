@@ -17,14 +17,14 @@ use Illuminate\View\View;
 class LoginController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaServiceInterface $seoMeta,
+        protected readonly SeoMetaServiceInterface $seoMetaService,
         protected readonly ActivityLogServiceInterface $activityLogServiceInterface
     ) {
     }
 
     public function show(): View
     {
-        $this->seoMeta->setTitle(__('Authentication'));
+        $this->seoMetaService->setTitle(__('Authentication'));
 
         return view('admin.auth.login');
     }
