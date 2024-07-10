@@ -7,5 +7,5 @@ use App\Models\User;
 
 interface SettingServiceInterface
 {
-    public function update(UpdateSettingData $data, User $updatedBy): bool;
+    public function update(UpdateSettingData $data, User $userUpdater): bool;
 }

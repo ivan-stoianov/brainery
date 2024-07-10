@@ -4,18 +4,26 @@ declare(strict_types=1);
 
 namespace App\Data;
 
-use Illuminate\Contracts\Support\Arrayable;
-
-final class CreateUserAdminData implements Arrayable
+final readonly class CreateUserAdminData implements DataInterface
 {
     public function __construct(
-        public readonly string $first_name,
-        public readonly string $last_name,
-        public readonly string $email,
-        public readonly string $password,
-        public readonly bool $active = true,
+        public string $first_name,
+        public string $last_name,
+        public string $email,
+        public string $password,
+        public bool $active = true,
     ) {
-        //
+    }
+
+    public static function fromArray(array $fields): CreateUserAdminData
+    {
+        return new CreateUserAdminData(
+            first_name: $fields['first_name'],
+            last_name: $fields['last_name'],
+            email: $fields['email'],
+            password: $fields['password'],
+            active: $fields['active'] ?? true,
+        );
     }
 
     public function toArray(): array

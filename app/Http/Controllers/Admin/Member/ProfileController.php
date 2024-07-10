@@ -13,7 +13,7 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaServiceInterface $seoMeta,
+        protected readonly SeoMetaServiceInterface $seoMetaService,
         protected readonly UserMemberRepositoryInterface $userMemberRepository
     ) {
     }
@@ -21,12 +21,11 @@ class ProfileController extends Controller
     public function show(int $memberId): View
     {
         $member = $this->userMemberRepository->findById($memberId);
-
         if (!$member) {
             throw new UserMemberNotFoundException();
         }
 
-        $this->seoMeta->setTitle($member->getName());
+        $this->seoMetaService->setTitle($member->getName());
 
         return view('admin.member.view', compact('member'));
     }

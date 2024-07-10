@@ -8,8 +8,12 @@ use App\Repositories\Contracts\UserMemberRepositoryInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
+#[Group("repository")]
+#[Group("user")]
+#[Group("member")]
 class UserMemberRepositoryTest extends TestCase
 {
     use RefreshDatabase, WithFaker;

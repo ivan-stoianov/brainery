@@ -9,6 +9,8 @@
                 </x-admin.page-title>
             </x-admin.page-header>
 
+            {{ app('flash.message')->display() }}
+
             <div class="two-columns-layout">
                 <div class="two-columns-layout-sidebar">
                     <div class="list-group list-group-flush mb-3">
@@ -22,7 +24,7 @@
                             <i class="fa-solid fa-file-invoice me-2 opacity-50" style="width: 20px;"></i>
                             {{ __('Activity log') }}
                         </a>
-                        <a href="#"
+                        <a href="{{ route('admin.user.settings.index', $user) }}"
                             class="list-group-item list-group-item-action py-3 {{ request()->routeIs('admin.user.settings.*') ? 'active' : '' }}">
                             <i class="fa-solid fa-cog me-2 opacity-50" style="width: 20px;"></i>
                             {{ __('Settings') }}

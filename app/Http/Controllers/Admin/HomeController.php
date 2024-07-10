@@ -14,13 +14,13 @@ use Illuminate\View\View;
 class HomeController extends Controller
 {
     public function __construct(
-        protected readonly SeoMetaServiceInterface $seoMeta
+        protected readonly SeoMetaServiceInterface $seoMetaService
     ) {
     }
 
     public function index(): View
     {
-        $this->seoMeta->setTitle(__('Dashboard'));
+        $this->seoMetaService->setTitle(__('Dashboard'));
 
         return view('admin.home');
     }

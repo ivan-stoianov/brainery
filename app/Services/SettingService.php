@@ -12,30 +12,28 @@ use Illuminate\Support\Facades\DB;
 class SettingService implements SettingServiceInterface
 {
     public function __construct(
-        protected readonly SettingRepositoryInterface $settingServiceInterface,
-        protected readonly ActivityLogServiceInterface $activityLogServiceInterface
+        protected readonly SettingRepositoryInterface $settingRepository,
+        protected readonly ActivityLogServiceInterface $activityLogService
     ) {
     }
 
-    public function update(UpdateSettingData $data, User $updatedBy): bool
+    public function update(UpdateSettingData $data, User $userUpdater): bool
     {
-        return DB::transaction(
-            function () use ($data, $updatedBy) {
-                $saved = $this->settingServiceInterface->update($data);
+        return DB::transaction(function () use ($data, $userUpdater) {
+            $saved = $this->settingRepository->update($data);
 
-                if (!$saved) {
-                    return false;
-                }
-
-                $this->activityLogServiceInterface->record(
-                    description: __("Application settings has been updated."),
-                    event: "admin.settings.updated",
-                    subject: null,
-                    causer: $updatedBy
-                );
-
-                return $saved;
+            if (!$saved) {
+                return false;
             }
-        );
+
+            $this->activityLogService->record(
+                description: __("Application settings has been updated."),
+                event: "admin.settings.updated",
+                subject: null,
+                causer: $userUpdater
+            );
+
+            return $saved;
+        });
     }
 }
