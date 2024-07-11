@@ -15,11 +15,13 @@ use App\Services\Contracts\ActivityLogServiceInterface;
 use App\Services\Contracts\FlashMessageServiceInterface;
 use App\Services\Contracts\SeoMetaServiceInterface;
 use App\Services\Contracts\SettingServiceInterface;
+use App\Services\Contracts\UserAdminCacheServiceInterface;
 use App\Services\Contracts\UserAdminServiceInterface;
 use App\Services\FlashMessageService;
 use App\Services\HtmlExtendedService;
 use App\Services\SeoMetaService;
 use App\Services\SettingService;
+use App\Services\UserAdminCacheService;
 use App\Services\UserAdminService;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -48,6 +50,7 @@ class AppServiceProvider extends ServiceProvider
         // Services
         $this->app->bind(ActivityLogServiceInterface::class, ActivityLogService::class);
         $this->app->bind(SettingServiceInterface::class, SettingService::class);
+        $this->app->bind(UserAdminCacheServiceInterface::class, UserAdminCacheService::class);
         $this->app->bind(UserAdminServiceInterface::class, UserAdminService::class);
 
         $this->registerLocalProviders();
