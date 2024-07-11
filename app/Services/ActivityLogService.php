@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\Activity;
 use App\Services\Contracts\ActivityLogServiceInterface;
+use BackedEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use App\Models\Activity;
 
 class ActivityLogService implements ActivityLogServiceInterface
 {
@@ -21,9 +22,17 @@ class ActivityLogService implements ActivityLogServiceInterface
         return $this->activity->causedBy($causer)->latest()->paginate();
     }
 
-    public function record(string $description, string $event, Model $subject = null, Model $causer = null): void
+    public function record(string $description, string|BackedEnum $event, Model $subject = null, Model $causer = null): void
     {
-        $query = activity()->event($event);
+        $query = activity();
+
+        if (is_string($event)) {
+            $query->event($event);
+        }
+
+        if ($event instanceof BackedEnum) {
+            $query->event($event->value);
+        }
 
         if ($subject) {
             $query = $query->performedOn($subject);

@@ -8,7 +8,6 @@ use App\Data\UpdateUserAdminData;
 use App\Exceptions\Admin\UserAdminNotFoundException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\Settings\UpdateUserAdminRequest;
-use App\Policies\Admin\User\UserAdminPolicy;
 use App\Services\Contracts\FlashMessageServiceInterface;
 use App\Services\Contracts\SeoMetaServiceInterface;
 use App\Services\Contracts\UserAdminServiceInterface;
