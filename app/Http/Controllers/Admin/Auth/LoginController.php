@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\Auth;
 
+use App\Enums\ActivityLogEventName;
 use App\Enums\UserType;
 use App\Http\Controllers\Controller;
 use App\Services\Contracts\ActivityLogServiceInterface;
@@ -31,12 +32,10 @@ class LoginController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        $request->validate(
-            [
+        $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-            ]
-        );
+        ]);
 
         $rateLimiterKey = sprintf('admin.login:%s', $request->get('email'));
         $rateLimiterPerMinute = 5;
@@ -44,11 +43,12 @@ class LoginController extends Controller
         if (RateLimiter::tooManyAttempts($rateLimiterKey, $rateLimiterPerMinute)) {
             $seconds = RateLimiter::availableIn($rateLimiterKey);
 
-            return redirect()->back()->withInput()->withErrors(
-                [
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([
                     'email' => trans('auth.throttle', ['seconds' => $seconds])
-                ]
-            );
+                ]);
         }
 
         $email = $request->get('email');
@@ -70,7 +70,7 @@ class LoginController extends Controller
 
             $this->activityLogServiceInterface->record(
                 description: __('Authenticated.'),
-                event: "admin.auth.login",
+                event: ActivityLogEventName::ADMIN_AUTH_LOGIN,
                 causer: $user,
                 subject: $user,
             );
@@ -79,11 +79,12 @@ class LoginController extends Controller
         } else {
             RateLimiter::increment($rateLimiterKey);
 
-            return redirect()->back()->withInput()->withErrors(
-                [
-                'email' => trans('auth.failed'),
-                ]
-            );
+            return redirect()
+                ->back()
+                ->withInput()
+                ->withErrors([
+                    'email' => trans('auth.failed'),
+                ]);
         }
 
         return redirect()->back();
@@ -95,7 +96,7 @@ class LoginController extends Controller
 
         $this->activityLogServiceInterface->record(
             description: __('Logout.'),
-            event: "admin.auth.logout",
+            event: ActivityLogEventName::ADMIN_AUTH_LOGOUT,
             causer: $user,
             subject: $user,
         );

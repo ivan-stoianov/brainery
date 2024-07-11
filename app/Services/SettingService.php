@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Data\UpdateSettingData;
+use App\Enums\ActivityLogEventName;
 use App\Models\User;
 use App\Repositories\Contracts\SettingRepositoryInterface;
 use App\Services\Contracts\ActivityLogServiceInterface;
@@ -28,7 +29,7 @@ class SettingService implements SettingServiceInterface
 
             $this->activityLogService->record(
                 description: __("Application settings has been updated."),
-                event: "admin.settings.updated",
+                event: ActivityLogEventName::ADMIN_SETTINGS_UPDATED,
                 subject: null,
                 causer: $userUpdater
             );
